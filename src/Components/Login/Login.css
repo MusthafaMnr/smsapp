@@ -1,0 +1,73 @@
+.has-bg-img {
+    position: absolute;
+    max-width: 100%;
+    height: auto;
+    left: 0px;
+    top: 0px;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: 100%;
+}
+
+.has-bg-Gradient {
+    position: absolute;
+    width: 1903px;
+    height: 979px;
+    left: 0px;
+    top: 0px;
+    background: linear-gradient(181.04deg, rgba(2, 139, 134, 0.69) 27.79%, rgba(36, 114, 109, 0.67) 68.16%, #000000 103.47%);
+}
+
+.Bg {
+    position: absolute;
+    width: 476px;
+    height: 615px;
+    left: 201px;
+    top: 180px;
+    background: #FCFBFB;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4px);
+    /* Note: backdrop-filter has minimal browser support */
+    border-radius: 37px;
+   
+   
+   
+}
+.loginParentDiv{
+    padding: 50px;
+}
+
+.loginParentDiv .form {
+    margin-top: 200px;
+    
+}
+.logo{
+position: absolute;
+left: 120px;
+top:50px;
+cursor: pointer;
+}
+.title{
+    position: absolute;
+width: 91px;
+height: 42px;
+left: 180px;
+top: 130px;
+
+font-family: Roboto;
+font-style: normal;
+/* font-weight: bold; */
+font-size: 28px;
+line-height: 42px;
+text-align: center;
+
+color: #047C89;
+}
+.form{
+font-family: Roboto;
+font-style: normal;
+line-height: 32px;
+color: #047C89;
+}
