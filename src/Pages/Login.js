@@ -1,5 +1,6 @@
 import React from 'react'
 import Login from '../../src/Components/Login/Login'
+import Footer from '../Components/Footer/Footer'
 import Header from '../Components/Header/Header'
 
 function LoginPage() {
@@ -7,6 +8,7 @@ function LoginPage() {
         <div>
             <Header/>
             <Login/>
+            <Footer/>
         </div>
     )
 }
