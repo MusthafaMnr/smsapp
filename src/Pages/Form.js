@@ -1,15 +1,14 @@
 import React from 'react'
+import MessageForm from '../Components/Message_Form/Message_Form'
 import Header from '../Components/Header/Header'
-import Home from '../Components/Home/Home'
 
-
-function HomePage() {
+function Form() {
     return (
         <div>
             <Header/>
-            <Home/>
+            <MessageForm/>
         </div>
     )
 }
 
-export default HomePage
+export default Form

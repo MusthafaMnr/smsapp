@@ -200,6 +200,7 @@ section {
 .header .logo {
   line-height: 0;
   position: fixed;
+  left: 30px;
   top: 20px;
 }
 .header .logo img {
@@ -224,7 +225,7 @@ section {
 .navbar {
   padding: 0;
   position: fixed;
-  right: 50px;
+  right: 30px;
   top: 20px;
 }
 .navbar ul {

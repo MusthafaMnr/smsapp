@@ -1,9 +1,10 @@
 import React,{useContext,useEffect} from 'react';
 import './App.css';
-import Login from '../src/Pages/Login';
 import Home from '../src/Pages/Home'
+import Form from '../src/Pages/Form'
 import {BrowserRouter as Router,Route} from 'react-router-dom'
 import { AuthContext, FirebaseContext } from './Store/Fb_Context';
+import Login from './Pages/Login';
 
 
 function App() {
@@ -22,10 +23,13 @@ function App() {
       
       <Router>
         <Route exact path='/'>
+          <Home/>
+        </Route>
+        <Route exact path='/login'>
           <Login/>
         </Route>
-        <Route path='/Home'>
-          <Home/>
+        <Route path='/Form'>
+          <Form/>
         </Route>
       </Router>
       
