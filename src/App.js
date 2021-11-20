@@ -1,7 +1,7 @@
 import React,{useContext,useEffect} from 'react';
 import './App.css';
 import Home from '../src/Pages/Home'
-import Form from '../src/Pages/Form'
+import Form from '../src/Pages/Message_Form'
 import {BrowserRouter as Router,Route} from 'react-router-dom'
 import { AuthContext, FirebaseContext } from './Store/Fb_Context';
 import Login from './Pages/Login';

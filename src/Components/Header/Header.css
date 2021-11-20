@@ -4,8 +4,9 @@
 # Sections
 --------------------------------------------------------------*/
 section {
-  padding: 60px 0;
+  padding: 20px 0;
   overflow: hidden;
+  
 }
 
 .section-header {
@@ -413,3 +414,4 @@ section {
 .navbar-mobile .dropdown > .dropdown-active {
   display: block;
 }
+
