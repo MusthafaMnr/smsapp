@@ -1,7 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import './Login.css'
 import { useHistory } from 'react-router-dom'
 import { FirebaseContext } from '../../Store/Fb_Context';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 
 function Login() {
@@ -11,10 +13,14 @@ function Login() {
   const history = useHistory();
   const { firebase } = useContext(FirebaseContext);
 
+  useEffect(() => {
+    AOS.init();
+  }, [])
+
   const handlelogin = (e) => {
     e.preventDefault()
     firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-      history.push('/home')
+      history.push('/form')
       //alert('Logged In')
     }).catch((error) => {
       alert(error.message)

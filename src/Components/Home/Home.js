@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Home.css'
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 function Home() {
+    useEffect(()=>{
+        AOS.init();
+    },[])
     return (
         <div id="hero" class="hero d-flex align-items-center ,Back" >
             <div class="container">

@@ -9,6 +9,7 @@ function HomePage() {
         <div>
             <Header/>
             <Home/>
+            <Home/>
             <Footer/>
         </div>
     )
