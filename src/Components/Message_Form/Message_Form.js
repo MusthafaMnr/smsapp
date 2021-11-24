@@ -4,6 +4,7 @@ import { FirebaseContext, AuthContext } from '../../Store/Fb_Context';
 import { useEffect } from 'react';
 
 import axios from "../../axios";
+import {userId,key,senderId,entityId,tempId} from "../../constants/constants"
 
 
 function MessageForm() {
@@ -31,7 +32,11 @@ function MessageForm() {
       createdAt: date.toDateString()
     })
   //  Message Setup
-    axios.post()
+    axios.post(`submitsms.jsp?user=${userId}&key=${key}&mobile=+91${mobile}&message=Dear ${name}, we recieved with thanks sum of 10 rupees towards donation to the ${donat} Madin academy&senderid=MAHDIN&accusage=1&entityid=${entityId}&tempid=${tempId}`
+      ).then((response)=>{
+        console.log(response)
+      })
+
     // console.log(user.Name);
   }
 
