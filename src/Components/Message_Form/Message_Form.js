@@ -4,8 +4,9 @@ import { FirebaseContext, AuthContext } from '../../Store/Fb_Context';
 import { useEffect } from 'react';
 
 import axios from "../../axios";
-import {userId,key,senderId,entityId,tempId} from "../../constants/constants"
+import { userId, key, entityId, tempId } from "../../constants/constants"
 
+import Spinners from '../../assets/Spinners'
 
 function MessageForm() {
   const { firebase } = useContext(FirebaseContext)
@@ -17,6 +18,8 @@ function MessageForm() {
   const [donat, setDonat] = useState();
   const [amount, setAmount] = useState();
   const [mobile, setMobile] = useState();
+
+  const [tableLoading, setTableloading] = useState()
 
   const date = new Date();
 
@@ -31,28 +34,55 @@ function MessageForm() {
       userId: user.uid,
       createdAt: date.toDateString()
     })
-  //  Message Setup
+    //  Message Setup
     axios.post(`submitsms.jsp?user=${userId}&key=${key}&mobile=+91${mobile}&message=Dear ${name}, we recieved with thanks sum of 10 rupees towards donation to the ${donat} Madin academy&senderid=MAHDIN&accusage=1&entityid=${entityId}&tempid=${tempId}`
-      ).then((response)=>{
-        console.log(response)
-      })
+    ).then((response) => {
+      console.log(response)
+    })
 
     // console.log(user.Name);
   }
 
-  useEffect(() => {
-    firebase.firestore().collection("Donations")
-    .orderBy("createdAt", "asc").get().then((snapshot) => {
-      const allPost = snapshot.docs.map((product) => {
-        return {
-          ...product.data(),
-          id: product.id
-        }
+  const MessageReport = async () => {
+    try {
+      const data = await
+        firebase.firestore().collection("Donations")
+          .orderBy("createdAt", "asc").get().then((snapshot) => {
+            const allPost = snapshot.docs.map((product) => {
+              return {
+                ...product.data(),
+                id: product.id
+              }
+            })
+            setTableloading(true);
+            setDonations(allPost)
+          })
 
-      })
-      setDonations(allPost)
-    })
-  })
+    } catch (e) {
+
+    }
+  };
+
+  useEffect(() => {
+    MessageReport();
+
+  }, [])
+
+
+
+  // useEffect(() => {
+  //   firebase.firestore().collection("Donations")
+  //   .orderBy("createdAt", "asc").get().then((snapshot) => {
+  //     const allPost = snapshot.docs.map((product) => {
+  //       return {
+  //         ...product.data(),
+  //         id: product.id
+  //       }
+
+  //     })
+  //     setDonations(allPost)
+  //   })
+  // })
 
   return (
     <div id="main" class="main">
@@ -115,6 +145,7 @@ function MessageForm() {
                   </div>
                 </div>
               </div>
+              <Spinners />
               {/* <!-- End Message Form --> */}
             </div>
           </div>
@@ -144,23 +175,23 @@ function MessageForm() {
                 <div class="card-body">
                   <h5 class="card-title">Message Report</h5>
                   <div class="table-wrapper">
-                    <table class="table table-borderless datatable">
-                      <thead>
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Name</th>
-                          <th scope="col">Place</th>
-                          <th scope="col">Donation to</th>
-                          <th scope="col">Amount</th>
-                          <th scope="col">Mobile Number</th>
-                        </tr>
-                      </thead>
-
+                    
+                    <table class="table table-borderless datatable" >
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Place</th>
+                        <th scope="col">Donation to</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Mobile Number</th>
+                      </tr>
+                    </thead>
+                    { tableLoading ?
                       <tbody>
-
-                        {donations.map((product,index) => {
+                        {donations.map((product, index) => {
                           return <tr>
-                            <th scope="row"><a href="/">{index}</a></th>
+                            <th scope="row"><a >{index}</a></th>
                             <td><a class="text-primary">{product.name}</a></td>
                             <td>{product.place}</td>
                             <td>{product.donat}</td>
@@ -170,8 +201,30 @@ function MessageForm() {
                         })
                         }
                       </tbody>
+                      :
+                      <tbody>
+                          <tr>
+                            <th scope="row"><a ></a></th>
+                            <td><a class="text-primary"></a></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                          </tr>     
+                          <tr>
+                            <th scope="row"><a ></a></th>
+                            <td><a class="text-primary"></a></td>
+                            <td></td>
+                            <td><Spinners></Spinners></td>
+                            <td></td>
+                            <td></td>
+                          </tr>                                      
+                      </tbody>
+                      
+                    }
+                  </table>
 
-                    </table>
+                   
                   </div>
                 </div>
               </div>
@@ -295,3 +348,36 @@ export default MessageForm
 
   // </tbody >
 
+
+
+
+  // < table class="table table-borderless datatable" >
+  //   <thead>
+  //     <tr>
+  //       <th scope="col">#</th>
+  //       <th scope="col">Name</th>
+  //       <th scope="col">Place</th>
+  //       <th scope="col">Donation to</th>
+  //       <th scope="col">Amount</th>
+  //       <th scope="col">Mobile Number</th>
+  //     </tr>
+  //   </thead>
+  //  </table >
+
+
+  // <table class="table table-borderless datatable">
+  //   {formLoading ?
+  //     <tbody>
+  //       {donations.map((product, index) => {
+  //         return <tr>
+  //           <th scope="row"><a href="/">{index}</a></th>
+  //           <td><a class="text-primary">{product.name}</a></td>
+  //           <td>{product.place}</td>
+  //           <td>{product.donat}</td>
+  //           <td>{product.amount}</td>
+  //           <td>{product.mobile}</td>
+  //         </tr>
+  //       })
+  //       }
+  //     </tbody> : <Spinners class="formloading" />}
+  // </table>

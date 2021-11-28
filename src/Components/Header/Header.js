@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import './Header.css'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { AuthContext } from '../../Store/Fb_Context'
 
 function Header() {
     const [isMobile, setIsMobile] = useState(false);
-    
+    const { user } = useContext(AuthContext)
+
     useEffect(() => {
         AOS.init();
     }, [])
@@ -18,26 +20,32 @@ function Header() {
                     <span>SMS APP</span>
                 </a>
 
-                <nav id="navbar" class={isMobile ? "navbar-mobile" : "navbar" }>
+                <nav id="navbar" class={isMobile ? "navbar-mobile" : "navbar"}>
                     <ul
                     // onClick={()=>setIsMobile(false)}
                     >
                         <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
                         <li><a class="nav-link scrollto" href="#about">About</a></li>
-        
-                        <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-                        <li class="dropdown" ><a class="getstarted scrollto" href="#">Login <i class="bi bi-chevron-down"></i></a>
+
+                        <li><a class="nav-link scrollto" href="#contact">Report</a></li>
+
+                        {/* {user ? <li class="dropdown" ><a class="getstarted scrollto"> {user.Name} <i class="bi bi-chevron-down"></i></a>
                             <ul class="dropdown-active">
-                                <li><a href="/form">Drop Down 1</a></li>
-                                <li><a href="#">Drop Down 2</a></li>
-                                <li><a href="#">Drop Down 3</a></li>
-                                <li><a href="#">Drop Down 4</a></li>
+                                <li><a href="/form">Logout</a></li>
+
+                            </ul>
+                        </li> : <li><a class="getstarted scrollto" href="#contact">LOGIN</a></li>} */}
+
+
+                        <li class="dropdown" ><a class="getstarted scrollto">LOGIN<i class="bi bi-chevron-down"></i></a>
+                            <ul class="dropdown-active">
+                                <li><a href="/form">Logout</a></li>
                             </ul>
                         </li>
 
                     </ul>
                     <i class="mobile-menu-icon"
-                    onClick={()=> setIsMobile (!isMobile)}
+                        onClick={() => setIsMobile(!isMobile)}
                     >
                         {isMobile ? (
                             <i class="bi bi-x"></i>

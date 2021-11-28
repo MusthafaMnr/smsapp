@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { FirebaseContext } from '../../Store/Fb_Context';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import Spinners from '../../assets/Spinners'
 
 
 function Login() {
@@ -13,15 +14,18 @@ function Login() {
   const history = useHistory();
   const { firebase } = useContext(FirebaseContext);
 
+  const [loading, setloading] = useState()
+
   useEffect(() => {
     AOS.init();
   }, [])
 
   const handlelogin = (e) => {
     e.preventDefault()
+    setloading(true)
     firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
       history.push('/form')
-      //alert('Logged In')
+      // alert('Logged In')
     }).catch((error) => {
       alert(error.message)
     })
@@ -72,10 +76,15 @@ function Login() {
                     </div>
                   </div>
                   <div class="text-center">
-                    <button type="submit" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">LOGIN</button>
+                    {loading ? <Spinners/> : <button type="submit" 
+                    class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">LOGIN</button> } 
+                    {/* <button type="submit"  */}
+                    {/* class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">LOGIN</button> */}
                   </div>
 
                 </form>
+
+                {/* <Spinners/> */}
 
               </div>
             </div>
