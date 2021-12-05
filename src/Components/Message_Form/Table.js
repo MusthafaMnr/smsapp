@@ -1,273 +1,73 @@
-import React, { useState, useContext } from 'react'
-import { useEffect } from 'react';
+import React, { useState,useEffect, useContext } from 'react'
+import { FirebaseContext} from '../../Store/Fb_Context';
+import BootstrapTable from 'react-bootstrap-table-next';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
-
-
-import { useTable, usePagination } from 'react-table'
- 
 function Table() {
-    const data = React.useMemo(
-      () => [
-        {
-          col1: '#',
-          col2: 'Wdfgdfgdfgorld',
-          col3: 'Wdfgdgdgdfgd',
-          col4: 'ldfgdfgdfgdfd',
-          col5: 'ddfgdfgdfgdf',
-          col6: 'Wgfddfggdfgdfgo',          
-        },
-        {
-          col1: '#',
-          col2: 'Wdfgdfgdfgorld',
-          col3: 'Wdfgdgdgdfgd',
-          col4: 'ldfgdfgdfgdfd',
-          col5: 'ddfgdfgdfgdf',
-          col6: 'Wgfddfggdfgdfgo',          
-        },
-        {
-          col1: '#',
-          col2: 'Wdfgdfgdfgorld',
-          col3: 'Wdfgdgdgdfgd',
-          col4: 'ldfgdfgdfgdfd',
-          col5: 'ddfgdfgdfgdf',
-          col6: 'Wgfddfggdfgdfgo',          
-        },
-        {
-          col1: '#',
-          col2: 'Wdfgdfgdfgorld',
-          col3: 'Wdfgdgdgdfgd',
-          col4: 'ldfgdfgdfgdfd',
-          col5: 'ddfgdfgdfgdf',
-          col6: 'Wgfddfggdfgdfgo',          
-        },
-        {
-          col1: '#',
-          col2: 'Wdfgdfgdfgorld',
-          col3: 'Wdfgdgdgdfgd',
-          col4: 'ldfgdfgdfgdfd',
-          col5: 'ddfgdfgdfgdf',
-          col6: 'Wgfddfggdfgdfgo',          
-        },
-        {
-          col1: '#',
-          col2: 'Wdfgdfgdfgorld',
-          col3: 'Wdfgdgdgdfgd',
-          col4: 'ldfgdfgdfgdfd',
-          col5: 'ddfgdfgdfgdf',
-          col6: 'Wgfddfggdfgdfgo',          
-        },
-        {
-          col1: '#',
-          col2: 'Wdfgdfgdfgorld',
-          col3: 'Wdfgdgdgdfgd',
-          col4: 'ldfgdfgdfgdfd',
-          col5: 'ddfgdfgdfgdf',
-          col6: 'Wgfddfggdfgdfgo',          
-        },
-        {
-          col1: '#',
-          col2: 'Wdfgdfgdfgorld',
-          col3: 'Wdfgdgdgdfgd',
-          col4: 'ldfgdfgdfgdfd',
-          col5: 'ddfgdfgdfgdf',
-          col6: 'Wgfddfggdfgdfgo',          
-        },
-        {
-          col1: '#',
-          col2: 'Wdfgdfgdfgorld',
-          col3: 'Wdfgdgdgdfgd',
-          col4: 'ldfgdfgdfgdfd',
-          col5: 'ddfgdfgdfgdf',
-          col6: 'Wgfddfggdfgdfgo',          
-        },
-        {
-          col1: '#',
-          col2: 'Wdfgdfgdfgorld',
-          col3: 'Wdfgdgdgdfgd',
-          col4: 'ldfgdfgdfgdfd',
-          col5: 'ddfgdfgdfgdf',
-          col6: 'Wgfddfggdfgdfgo',          
-        },
-        {
-          col1: '#',
-          col2: 'Wdfgdfgdfgorld',
-          col3: 'Wdfgdgdgdfgd',
-          col4: 'ldfgdfgdfgdfd',
-          col5: 'ddfgdfgdfgdf',
-          col6: 'Wgfddfggdfgdfgo',          
-        },
-        {
-          col1: '#',
-          col2: 'Wdfgdfgdfgorld',
-          col3: 'Wdfgdgdgdfgd',
-          col4: 'ldfgdfgdfgdfd',
-          col5: 'ddfgdfgdfgdf',
-          col6: 'Wgfddfggdfgdfgo',          
-        },
-        {
-          col1: '#',
-          col2: 'Wdfgdfgdfgorld',
-          col3: 'Wdfgdgdgdfgd',
-          col4: 'ldfgdfgdfgdfd',
-          col5: 'ddfgdfgdfgdf',
-          col6: 'Wgfddfggdfgdfgo',          
-        },      
-      ],
-      []
-    )
-  
-    const columns = React.useMemo(
-      () => [
-        {
-          Header: '#',
-          accessor: 'col1', // accessor is the "key" in the data
-        },
-        {
-          Header: '	Name',
-          accessor: 'col2',
-        },
-        {
-          Header: '	Place',
-          accessor: 'col3',
-        },
-        {
-          Header: '	Donation to',
-          accessor: 'col4',
-        },{
-          Header: '	Amount',
-          accessor: 'col5',
-        },{
-          Header: '	Mobile Number',
-          accessor: 'col6',
-        },
-      ],
-      []
-    )
-  
-    const {
-      getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    page, // Instead of using 'rows', we'll use page,
-    // which has only the rows for the active page
+  const { firebase } = useContext(FirebaseContext)
+  const [donations, setDonations] = useState([])
 
-    // The rest of these things are super handy, too ;)
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
-    } = useTable(
-      { columns, data },
-      usePagination
-      )
-  
-    return (
-      <div>
-        
-      <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th
-                  {...column.getHeaderProps()}
-                  style={{
-                    borderBottom: 'solid 3px red',
-                    background: 'aliceblue',
-                    color: 'black',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {column.render('Header')}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map(row => {
-            prepareRow(row)
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return (
-                    <td
-                      {...cell.getCellProps()}
-                      style={{
-                        padding: '10px',
-                        border: 'solid 1px gray',
-                        background: 'papayawhip',
-                      }}
-                    >
-                      {cell.render('Cell')}
-                    </td>
-                  )
-                })}
-              </tr>
-            )
-          })}
-        </tbody>
-        {usePagination}
-      </table>
 
-<div className="pagination">
-<button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-  {'<<'}
-</button>{' '}
-<button onClick={() => previousPage()} disabled={!canPreviousPage}>
-  {'<'}
-</button>{' '}
-<button onClick={() => nextPage()} disabled={!canNextPage}>
-  {'>'}
-</button>{' '}
-<button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-  {'>>'}
-</button>{' '}
-<span>
-  Page{' '}
-  <strong>
-    {pageIndex + 1} of {pageOptions.length}
-  </strong>{' '}
-</span>
-<span>
-  | Go to page:{' '}
-  <input
-    type="number"
-    defaultValue={pageIndex + 1}
-    onChange={e => {
-      const page = e.target.value ? Number(e.target.value) - 1 : 0
-      gotoPage(page)
-    }}
-    style={{ width: '100px' }}
-  />
-</span>{' '}
-<select
-  value={pageSize}
-  onChange={e => {
-    setPageSize(Number(e.target.value))
-  }}
->
-  {[10, 20, 30, 40, 50].map(pageSize => (
-    <option key={pageSize} value={pageSize}>
-      Show {pageSize}
-    </option>
-  ))}
-</select>
-</div>
+  const columns = [{
+    dataField: 'id',text: 'ID'
+  }, {
+    dataField: 'name', text: 'Name'
+  }, {
+    dataField: 'place',text: 'Place'
+  },{
+    dataField: 'Donation',text: 'Donation to'
+  },{
+    dataField: 'amount',text: 'Amount'
+  },{
+    dataField: 'mobile',text: 'Mobile Number'
+  }];
 
-</div>
+  useEffect(() => {
+    firebase.firestore().collection("Donations")
+    .orderBy("createdAt", "asc").get().then((snapshot) => {
+      const allPost = snapshot.docs.map((product) => {
+        return {
+          ...product.data(),
+          id: product.id
+        }
+      })
+      setDonations(allPost)
+    })
+  },[])
 
-    )
-  }
+
+  return (
+    <div>
+      <BootstrapTable keyField="id" columns={columns} data={donations} />
+
+      {/* <table>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Place</th>
+          <th>Donation to</th>
+          <th>Amount</th>
+          <th>Mobile Number</th>
+        </tr>
+        {
+          donations && donations.length> 0 ?
+          donations.map((product, index) =>
+          <tr>
+            <th scope="row"><a >{index}</a></th>
+            <td><a class="text-primary">{product.name}</a></td>
+            <td>{product.place}</td>
+            <td>{product.donat}</td>
+            <td>{product.amount}</td>
+            <td>{product.mobile}</td>
+          </tr>
+          )
+          : "loading"
+        }
+      </table> */}
+    </div>
+  )
+}
+
 export default Table
-
-
-
