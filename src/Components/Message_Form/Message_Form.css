@@ -8,7 +8,7 @@
   padding: 80px 30px;
   transition: all 0.3s;
   background: #f6f9ff;
-  padding-bottom: 120px;
+  padding-bottom: 60px;
  
 }
 @media (max-width: 1199px) {
@@ -113,10 +113,10 @@
 
 
 .table-wrapper{
-  height: 400px;
+  height:500px;
   overflow: auto;
+  
 }
-
 
 
 
