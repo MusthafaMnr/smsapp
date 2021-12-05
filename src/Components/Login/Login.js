@@ -24,10 +24,12 @@ function Login() {
     e.preventDefault()
     setloading(true)
     firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-      history.push('/form')
+      history.push('/')
       // alert('Logged In')
     }).catch((error) => {
+      setloading(false)
       alert(error.message)
+
     })
   }
 

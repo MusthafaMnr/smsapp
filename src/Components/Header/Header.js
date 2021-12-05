@@ -2,11 +2,15 @@ import React, { useEffect, useState, useContext } from 'react'
 import './Header.css'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { AuthContext } from '../../Store/Fb_Context'
+import { AuthContext, FirebaseContext } from '../../Store/Fb_Context'
+import {useHistory} from 'react-router-dom'
 
 function Header() {
     const [isMobile, setIsMobile] = useState(false);
     const { user } = useContext(AuthContext)
+    const { firebase } = useContext(FirebaseContext)
+
+    const history = useHistory();
 
     useEffect(() => {
         AOS.init();
@@ -15,7 +19,7 @@ function Header() {
         <div id="header" class="header fixed-top ">
             <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-                <a href="/" class="logo d-flex align-items-center">
+                <a onClick={()=>{history.push('/')}} class="logo d-flex align-items-center">
                     <img src="../../../Image/logo .png" alt="" />
                     <span>SMS APP</span>
                 </a>
@@ -29,19 +33,23 @@ function Header() {
 
                         <li><a class="nav-link scrollto" href="#contact">Report</a></li>
 
-                        {/* {user ? <li class="dropdown" ><a class="getstarted scrollto"> {user.Name} <i class="bi bi-chevron-down"></i></a>
+                        {user ? <li class="dropdown" ><a class="getstarted scrollto"> {user.email} <i class="bi bi-chevron-down"></i></a>
                             <ul class="dropdown-active">
-                                <li><a href="/form">Logout</a></li>
+                                <li><a onClick={() =>{
+                                    firebase.auth().signOut();
+                                    history.push('/')
+                                    
+                                }}>Logout</a></li>
 
                             </ul>
-                        </li> : <li><a class="getstarted scrollto" href="#contact">LOGIN</a></li>} */}
+                        </li> : <li><a class="getstarted scrollto" onClick={()=>{history.push('/login')}}>LOGIN</a></li>}
 
 
-                        <li class="dropdown" ><a class="getstarted scrollto">LOGIN<i class="bi bi-chevron-down"></i></a>
+                        {/* <li class="dropdown" ><a class="getstarted scrollto">LOGIN<i class="bi bi-chevron-down"></i></a>
                             <ul class="dropdown-active">
                                 <li><a href="/form">Logout</a></li>
                             </ul>
-                        </li>
+                        </li> */}
 
                     </ul>
                     <i class="mobile-menu-icon"

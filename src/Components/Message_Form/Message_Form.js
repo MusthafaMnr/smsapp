@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import './Message_Form.css'
 import { FirebaseContext, AuthContext } from '../../Store/Fb_Context';
 import { useEffect } from 'react';
+import {useHistory} from 'react-router-dom'
 
 import axios from "../../axios";
 import { userId, key, entityId, tempId } from "../../constants/constants"
@@ -20,8 +21,10 @@ function MessageForm() {
   const [mobile, setMobile] = useState();
 
   const [tableLoading, setTableloading] = useState()
+  const history = useHistory();
 
-  const date = new Date();
+  var date = new Date();
+  
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -40,49 +43,26 @@ function MessageForm() {
       console.log(response)
     })
 
-    // console.log(user.Name);
+    // console.log(user.email);
+    .catch((error) => {
+      alert(error.message)
+    })
+
   }
 
-  const MessageReport = async () => {
-    try {
-      const data = await
-        firebase.firestore().collection("Donations")
-          .orderBy("createdAt", "asc").get().then((snapshot) => {
-            const allPost = snapshot.docs.map((product) => {
-              return {
-                ...product.data(),
-                id: product.id
-              }
-            })
-            setTableloading(true);
-            setDonations(allPost)
-          })
-
-    } catch (e) {
-
-    }
-  };
-
   useEffect(() => {
-    MessageReport();
-
-  }, [])
-
-
-
-  // useEffect(() => {
-  //   firebase.firestore().collection("Donations")
-  //   .orderBy("createdAt", "asc").get().then((snapshot) => {
-  //     const allPost = snapshot.docs.map((product) => {
-  //       return {
-  //         ...product.data(),
-  //         id: product.id
-  //       }
-
-  //     })
-  //     setDonations(allPost)
-  //   })
-  // })
+    // firebase.firestore().collection("Donations")
+    // .orderBy("createdAt", "asc").get().then((snapshot) => {
+    //   const allPost = snapshot.docs.map((product) => {
+    //     return {
+    //       ...product.data(),
+    //       id: product.id
+    //     }
+    //   })
+    //   setTableloading(true);
+    //   setDonations(allPost)
+    // })
+  },[])
 
   return (
     <div id="main" class="main">
@@ -145,7 +125,7 @@ function MessageForm() {
                   </div>
                 </div>
               </div>
-              <Spinners />
+              
               {/* <!-- End Message Form --> */}
             </div>
           </div>
@@ -381,3 +361,34 @@ export default MessageForm
   //       }
   //     </tbody> : <Spinners class="formloading" />}
   // </table>
+
+
+
+
+
+
+
+  // const MessageReport = async () => {
+  //   try {
+  //     const data = await
+  //       firebase.firestore().collection("Donations")
+  //         .orderBy("createdAt", "asc").get().then((snapshot) => {
+  //           const allPost = snapshot.docs.map((product) => {
+  //             return {
+  //               ...product.data(),
+  //               id: product.id
+  //             }
+  //           })
+  //           setTableloading(true);
+  //           setDonations(allPost)
+  //         })
+
+  //   } catch (e) {
+
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   MessageReport();
+
+  // }, [])

@@ -69,6 +69,7 @@ section {
   position: fixed;
   left: 30px;
   top: 20px;
+  cursor: pointer;
 }
 .header .logo img {
   max-height: 40px;
@@ -134,6 +135,7 @@ section {
   margin-left: 30px;
   border-radius: 4px;
   color: #fff;
+  cursor: pointer;
 }
 .navbar .getstarted:hover, .navbar .getstarted:focus:hover,
 .navbar-mobile .getstarted:hover, .navbar-mobile .getstarted:focus:hover {
@@ -169,6 +171,7 @@ section {
 }
 .navbar .dropdown ul a:hover, .navbar .dropdown ul .active:hover, .navbar .dropdown ul li:hover > a {
   color: #4154f1;
+  cursor: pointer;
 }
 .navbar .dropdown:hover > ul {
   opacity: 1;
@@ -297,6 +300,7 @@ section {
 }
 .navbar-mobile .dropdown > .dropdown-active {
   display: block;
+  cursor: pointer;
   
 }
 

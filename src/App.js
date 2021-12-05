@@ -5,6 +5,7 @@ import Form from '../src/Pages/Message_Form'
 import {BrowserRouter as Router,Route} from 'react-router-dom'
 import { AuthContext, FirebaseContext } from './Store/Fb_Context';
 import Login from './Pages/Login';
+import Table from './Components/Message_Form/Table';
 
 
 function App() {
@@ -24,14 +25,20 @@ function App() {
       
       <Router>
         <Route exact path='/'>
-          <Home/>
+          {user ? <Home/> : <Login/> }
         </Route>
-        <Route exact path='/login'>
-          <Login/>
-        </Route>
+
         <Route path='/Form'>
           <Form/>
         </Route>
+
+        {/* <Route exact path='/login'>
+          <Login/> 
+        </Route> */}
+        <Route path='/table'>
+          <Table/>
+        </Route>
+
       </Router>
       
     </div>
