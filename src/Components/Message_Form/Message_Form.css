@@ -114,7 +114,7 @@
 
 .table-wrapper{
   height:500px;
-  overflow: auto;
+  /* overflow: auto; */
   
 }
 

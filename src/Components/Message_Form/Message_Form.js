@@ -32,13 +32,13 @@ function MessageForm() {
       amount,
       mobile,
       userId: user.uid,
-      createdAt: date.toDateString()
+      createdAt: date.toDateString(),
     })
     //  Message Setup
-    axios.post(`submitsms.jsp?user=${userId}&key=${key}&mobile=+91${mobile}&message=Dear ${name}, we recieved with thanks sum of 10 rupees towards donation to the ${donat} Madin academy&senderid=MAHDIN&accusage=1&entityid=${entityId}&tempid=${tempId}`
-    ).then((response) => {
-      console.log(response)
-    })
+    // axios.post(`submitsms.jsp?user=${userId}&key=${key}&mobile=+91${mobile}&message=Dear ${name}, we recieved with thanks sum of 10 rupees towards donation to the ${donat} Madin academy&senderid=MAHDIN&accusage=1&entityid=${entityId}&tempid=${tempId}`
+    // ).then((response) => {
+    //   console.log(response)
+    // })
 
     // console.log(user.Name);
   }
