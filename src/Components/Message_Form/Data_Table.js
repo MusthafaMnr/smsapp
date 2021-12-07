@@ -11,7 +11,7 @@ import Spinners from '../../assets/Spinners'
 
 
 
-function Data_Table() {
+export default function Data_Table() {
     const { firebase } = useContext(FirebaseContext)
     const [donations, setDonations] = useState([])
 
@@ -19,8 +19,10 @@ function Data_Table() {
 
     const { SearchBar } = Search;
 
+    
+
     const columns = [{
-        dataField: 'position', text: '#'
+        dataField: '[]' , text: '#'
     }, {
         dataField: 'name', text: 'Name'
     }, {
@@ -31,6 +33,8 @@ function Data_Table() {
         dataField: 'amount', text: 'Amount'
     }, {
         dataField: 'mobile', text: 'Mobile Number'
+    }, {
+        dataField: 'createdAt', text: 'Date & Time'
     }];
 
     const pagination = paginationFactory({
@@ -41,19 +45,22 @@ function Data_Table() {
         nextPageText: '>',
         prePageText: '<',
         showTotal: true,
-        alwaysShowAllBtns: true,
+        sizePerPageList: false,
+        
+        // alwaysShowAllBtns: true,
     });
 
 
     useEffect(() => {
         firebase.firestore().collection("Donations")
-            .orderBy("createdAt", "asc").get().then((snapshot) => {
+            .orderBy("createdAt", "desc").get().then((snapshot) => {
                 const allPost = snapshot.docs.map((product) => {
                     return {
                         ...product.data(),
                         id: product.id
                     }
                 })
+                // console.log(allPost);
                 setTableloading(true);
                 setDonations(allPost)
             })
@@ -73,26 +80,26 @@ function Data_Table() {
                     props => (
                         <div>
                             <div class="Table-card-body">
-                            <div class="Table-card-title row">
-                                <div class="col-lg-6 " >
-                                    <h5 >Message Report</h5>
+                             <div class="Table-card-title row">
+                                        <div class="col-lg-6 " >
+                                            <h5 >Message Report</h5>
+                                        </div>
+                                        <div class="table-searchBase col-lg-6 row">                                        
+                                            <div class="col-lg-7">
+                                                <br></br>
+                                            </div>  
+                                            <div class="table-search col-lg-5">
+                                                <SearchBar   {...props.searchProps} />
+                                            </div>                               
+                                        </div>                            
+                             </div>
+                                <div class="table-wrapper">
+                                    {tableLoading ?
+                                     <BootstrapTable
+                                        pagination={pagination}
+                                         {...props.baseProps}
+                                    /> : <Spinners></Spinners>}
                                 </div>
-                                <div class="col-lg-6 ">
-                                <label class="col-lg-3 "/>
-                                    
-                                    <div class="table-search col-lg-3">
-                                    <SearchBar  {...props.searchProps} />
-                                    </div>                               
-                                </div>
-                            
-                            </div>
-                            <div class="table-wrapper">
-                            {tableLoading ?
-                                <BootstrapTable
-                                pagination={pagination}
-                                {...props.baseProps}
-                            /> : <Spinners></Spinners>}
-                            </div>
                             </div>
                         </div>
                     )
@@ -103,7 +110,7 @@ function Data_Table() {
     )
 }
 
-export default Data_Table
+
 
 
 
