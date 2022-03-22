@@ -2,17 +2,18 @@ import React, { useState, useContext } from 'react'
 import './Message_Form.css'
 import { FirebaseContext, AuthContext } from '../../Store/Fb_Context';
 import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom'
 
 import axios from "../../axios";
 import { userId, key, entityId, tempId } from "../../constants/constants"
 
 import Spinners from '../../assets/Spinners'
-import Data_Table from './Data_Table'
+import DataTable from './Data_Table'
 
 function MessageForm() {
   const { firebase } = useContext(FirebaseContext)
   const { user } = useContext(AuthContext)
-  const [donations, setDonations] = useState([])
+  // const [donations, setDonations] = useState([])
 
   const [name, setName] = useState();
   const [place, setPlace] = useState();
@@ -21,7 +22,9 @@ function MessageForm() {
   const [mobile, setMobile] = useState();
 
   const [formLoading, setFormloading] = useState();
-  
+  const history = useHistory();
+  const [smsBalance, setSmsBalance] = useState()
+
   // const Status=false;
 
   const date = new Date();
@@ -29,7 +32,20 @@ function MessageForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    firebase.firestore().collection('Donations').add({
+    setFormloading(true);
+    //  Message Setup
+    axios.post(`submitsms.jsp?user=${userId}&key=${key}&mobile=+91${mobile}&message=Dear ${name}, 
+    we recieved with thanks sum of ${amount} rupees towards donation to the ${donat} 
+    Madin academy&senderid=MAHDIN&accusage=1&entityid=${entityId}&tempid=${tempId}`
+    ).then((response) => {
+      // console.log(response.data[2])
+      alert(response.data)
+      setFormloading(false);
+      history.push('/form')
+      // setFormloading(false);
+   
+  if(response.data[2] === 's'){
+      firebase.firestore().collection('Donations').add({
       name,
       place,
       donat,
@@ -39,18 +55,23 @@ function MessageForm() {
       createdAt:date.toLocaleString()
       // createdAt: date.toDateString(),
     })
-    setFormloading(true);
-    //  Message Setup
-    axios.post(`submitsms.jsp?user=${userId}&key=${key}&mobile=+91${mobile}&message=Dear ${name}, we recieved with thanks sum of 10 rupees towards donation to the ${donat} Madin academy&senderid=MAHDIN&accusage=1&entityid=${entityId}&tempid=${tempId}`
-    ).then((response) => {
-      setFormloading(false);
-      // console.log(response.status)
-      
-      alert(response.data)
+      }else{
+        
+      }
     })
+  }
+
+  useEffect(() => {
 
     
-  }
+    axios.get(`getbalance.jsp?user=${userId}&key=${key}&accusage=1`)
+    .then((response) =>{
+      // console.log(response.data); 
+      setSmsBalance(response.data)    
+    })
+  
+ 
+  }, [])
 
   
   return (
@@ -107,15 +128,35 @@ function MessageForm() {
                       <div class="col-12">
                         {formLoading ?  <Spinners /> : <button class="btn btn-primary" type="submit"
                           onClick={handleSubmit}
-                        >Submit form</button> }
+                        >SEND</button> }
                       </div>
                     </div>
 
                   </div>
                 </div>
               </div>
-              
               {/* <!-- End Message Form --> */}
+
+              {/* <!-- Message Balance Card --> */}
+
+              <div class="col-xxl-6 col-md-6">
+              <div class="card info-card sales-card">
+                <div class="card-body">
+                  <h5 class="card-title">Message Balance </h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-chat-right-dots"></i>
+                    </div>
+                    <div class="ps-3"> 
+                      <h3 >{smsBalance}</h3>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            {/* <!-- End Message Balance Card --> */}
             </div>
           </div>
           {/* <!-- End Left side columns --> */}
@@ -126,7 +167,7 @@ function MessageForm() {
             {/* <!-- Message Report --> */}
             <div class="col-12">
               <div class="card recent-sales">               
-              <Data_Table></Data_Table>                                 
+              <DataTable user="hi"></DataTable>                                 
               </div>
             </div>
             {/* <!-- End Message Report --> */}
@@ -161,33 +202,26 @@ export default MessageForm
   // })
 
 
-  // < table class="table table-borderless datatable" >
-  //   <thead>
-  //     <tr>
-  //       <th scope="col">#</th>
-  //       <th scope="col">Name</th>
-  //       <th scope="col">Place</th>
-  //       <th scope="col">Donation to</th>
-  //       <th scope="col">Amount</th>
-  //       <th scope="col">Mobile Number</th>
-  //     </tr>
-  //   </thead>
-  //  </table >
+//   firebase.firestore().collection('Donations').add({
+//     name,
+//     place,
+//     donat,
+//     amount,
+//     mobile,
+//     userId: user.uid,
+//     createdAt:date.toLocaleString()
+//     // createdAt: date.toDateString(),
+//   })
+//   setFormloading(true);
+//   //  Message Setup
+//   axios.post(`submitsms.jsp?user=${userId}&key=${key}&mobile=+91${mobile}&message=Dear ${name}, we recieved with thanks sum of 10 rupees towards donation to the ${donat} Madin academy&senderid=MAHDIN&accusage=1&entityid=${entityId}&tempid=${tempId}`
+//   ).then((response) => {
+//     setFormloading(false);
+//     // console.log(response.status)
+    
+//     alert(response.data)
+//     history.push('/form')
+//   })
 
-
-  // <table class="table table-borderless datatable">
-  //   {formLoading ?
-  //     <tbody>
-  //       {donations.map((product, index) => {
-  //         return <tr>
-  //           <th scope="row"><a href="/">{index}</a></th>
-  //           <td><a class="text-primary">{product.name}</a></td>
-  //           <td>{product.place}</td>
-  //           <td>{product.donat}</td>
-  //           <td>{product.amount}</td>
-  //           <td>{product.mobile}</td>
-  //         </tr>
-  //       })
-  //       }
-  //     </tbody> : <Spinners class="formloading" />}
-  // </table>
+  
+// }

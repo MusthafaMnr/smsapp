@@ -9,15 +9,20 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
 import Spinners from '../../assets/Spinners'
 
+import { AuthContext } from '../../Store/Fb_Context';
 
 
-export default function Data_Table() {
+
+export default function DataTable() {
     const { firebase } = useContext(FirebaseContext)
     const [donations, setDonations] = useState([])
+    const { user } = useContext(AuthContext)
 
     const [tableLoading, setTableloading] = useState()
 
     const { SearchBar } = Search;
+
+   
 
     
 
@@ -47,23 +52,31 @@ export default function Data_Table() {
         showTotal: true,
         sizePerPageList: false,
         
+        
+        
         // alwaysShowAllBtns: true,
     });
 
 
+//     .collection("Donations")
+// .where("userId", "==", "sfqxpRpx7OSkec2SL3YihrAs4mt1")
+
     useEffect(() => {
-        firebase.firestore().collection("Donations")
-            .orderBy("createdAt", "desc").get().then((snapshot) => {
+    firebase.firestore().collection("Donations")
+        .where("userId", "==", `${user.uid}`)
+        // .orderBy("createdAt", "desc")
+        .get().then((snapshot) => {
                 const allPost = snapshot.docs.map((product) => {
                     return {
                         ...product.data(),
                         id: product.id
                     }
                 })
-                // console.log(allPost);
+                console.log(allPost);
                 setTableloading(true);
                 setDonations(allPost)
             })
+            
     }, [])
 
     return (

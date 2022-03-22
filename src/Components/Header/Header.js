@@ -1,24 +1,29 @@
 import React, { useEffect, useState, useContext } from 'react'
 import './Header.css'
+import Logo from '../Logo/Logo' 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { AuthContext } from '../../Store/Fb_Context'
+import { AuthContext } from '../../Store/Fb_Context';
+import { FirebaseContext } from '../../Store/Fb_Context';
+import { useHistory } from 'react-router-dom';
 
 function Header() {
     const [isMobile, setIsMobile] = useState(false);
     const { user } = useContext(AuthContext)
+    const { firebase } = useContext(FirebaseContext);
+    const history = useHistory();
 
     useEffect(() => {
         AOS.init();
+        
     }, [])
     return (
         <div id="header" class="header fixed-top ">
             <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-
-                <a href="/" class="logo d-flex align-items-center">
-                    <img src="../../../Image/logo .png" alt="" />
-                    <span>SMS APP</span>
-                </a>
+                <div  class="logo">
+                    <Logo></Logo>
+                </div>
+                
 
                 <nav id="navbar" class={isMobile ? "navbar-mobile" : "navbar"}>
                     <ul
@@ -37,11 +42,17 @@ function Header() {
                         </li> : <li><a class="getstarted scrollto" href="#contact">LOGIN</a></li>} */}
 
 
-                        <li class="dropdown" ><a class="getstarted scrollto">LOGIN<i class="bi bi-chevron-down"></i></a>
-                            <ul class="dropdown-active">
-                                <li><a href="/form">Logout</a></li>
-                            </ul>
-                        </li>
+                        {user ?
+                            <li class="dropdown" ><a class="getstarted scrollto">{user.displayName}<i class="bi bi-chevron-down"></i></a>
+                                <ul class="dropdown-active">
+                                    <li><a onClick={() => {
+                                        firebase.auth().signOut();
+                                        history.push('/')
+                                    }}>Logout</a></li>
+                                </ul>
+                            </li> :
+                            <a class="getstarted scrollto" >LOGIN</a>
+                        }
 
                     </ul>
                     <i class="mobile-menu-icon"
