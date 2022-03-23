@@ -10,6 +10,8 @@ import { userId, key, entityId, tempId } from "../../constants/constants"
 import Spinners from '../../assets/Spinners'
 import DataTable from './Data_Table'
 
+
+
 function MessageForm() {
   const { firebase } = useContext(FirebaseContext)
   const { user } = useContext(AuthContext)
@@ -29,6 +31,9 @@ function MessageForm() {
 
   const date = new Date();
   
+  function refreshPage() {
+    window.location.reload(false);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -41,7 +46,7 @@ function MessageForm() {
       // console.log(response.data[2])
       alert(response.data)
       setFormloading(false);
-      history.push('/form')
+      
       // setFormloading(false);
    
   if(response.data[2] === 's'){
@@ -54,11 +59,18 @@ function MessageForm() {
       userId: user.uid,
       createdAt:date.toLocaleString()
       // createdAt: date.toDateString(),
-    })
+      
+    }).then(() => {
+      // history.push('/form')
+      // alert('Logged In')
+      refreshPage()
+    }) 
       }else{
         
       }
+      
     })
+    
   }
 
   useEffect(() => {
@@ -67,9 +79,10 @@ function MessageForm() {
     axios.get(`getbalance.jsp?user=${userId}&key=${key}&accusage=1`)
     .then((response) =>{
       // console.log(response.data); 
-      setSmsBalance(response.data)    
+      setSmsBalance(response.data)
+      
     })
-  
+    
  
   }, [])
 
@@ -89,10 +102,11 @@ function MessageForm() {
                   <h5 class="card-title">Send Message</h5>
                   <div class="activity">
 
-                    <div class="row g-3">
+                  <form onSubmit={handleSubmit} >
+                    <div class="row g-3">              
                       <div class="col-md-6">
                         <label for="validationServer01" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="" required
+                        <input type="text" class="form-control" id="" required 
                           onChange={(e) => { setName(e.target.value) }} />
 
                       </div>
@@ -108,7 +122,16 @@ function MessageForm() {
                           <option selected disabled value="">Choose...</option>
                           <option>Swalath Majlis</option>
                           <option>Sadath Academy</option>
+                          <option>Relief kit</option>
+                          <option>Adoption</option>
                           <option>Orpanage</option>
+                          <option>Special school Deaf</option>
+                          <option>Special school blind</option>
+                          <option>Special school MR</option>
+                          <option>Mahlarathulbadriyya</option>
+                          <option>Home Care Orphanage</option>
+                          <option>Monthly Subscription</option>
+                          <option>Relief kit</option>
                         </select>
                       </div>
 
@@ -127,10 +150,12 @@ function MessageForm() {
 
                       <div class="col-12">
                         {formLoading ?  <Spinners /> : <button class="btn btn-primary" type="submit"
-                          onClick={handleSubmit}
+                         // onClick={handleSubmit}
                         >SEND</button> }
                       </div>
+                    
                     </div>
+                    </form>
 
                   </div>
                 </div>
