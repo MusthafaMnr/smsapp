@@ -4,8 +4,8 @@
 # Main
 --------------------------------------------------------------*/
 #main {
-  margin-top: 80px;
-  padding: 80px 30px;
+  /* margin-top: 60px; */
+  padding: 120px 30px;
   transition: all 0.3s;
   background: #f6f9ff;
   padding-bottom: 60px;
@@ -13,7 +13,7 @@
 }
 @media (max-width: 1199px) {
   #main {
-    padding: 20px;
+    padding: 90px 30px;
   }
 }
 
@@ -110,14 +110,35 @@
 .card-img-overlay {
   background-color: rgba(255, 255, 255, 0.6);
 }
+.btn{
+background-color: #4154f1;
+border: none;
+}
 
+.btn:hover{
+  background:linear-gradient(118deg, rgba(65,84,241,1) 0%, rgba(25,25,145,1) 100%);
+  border: none;
+}
 
-.table-wrapper{
+/* .table-wrapper{
   height:500px;
   overflow: auto;
   
-}
+} */
 
+/* card-icon */
+.card-icon {
+  color: #4154f1;
+  background: #f6f6fe;
+}
+.card-icon {
+  font-size: 32px;
+  line-height: 0;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
 
 
 
