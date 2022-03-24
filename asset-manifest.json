@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/smsapp/static/css/main.f710964e.chunk.css",
+    "main.js": "/smsapp/static/js/main.a769b571.chunk.js",
+    "main.js.map": "/smsapp/static/js/main.a769b571.chunk.js.map",
+    "runtime-main.js": "/smsapp/static/js/runtime-main.77970e77.js",
+    "runtime-main.js.map": "/smsapp/static/js/runtime-main.77970e77.js.map",
+    "static/css/2.02011f6a.chunk.css": "/smsapp/static/css/2.02011f6a.chunk.css",
+    "static/js/2.637c1618.chunk.js": "/smsapp/static/js/2.637c1618.chunk.js",
+    "static/js/2.637c1618.chunk.js.map": "/smsapp/static/js/2.637c1618.chunk.js.map",
+    "index.html": "/smsapp/index.html",
+    "static/css/2.02011f6a.chunk.css.map": "/smsapp/static/css/2.02011f6a.chunk.css.map",
+    "static/css/main.f710964e.chunk.css.map": "/smsapp/static/css/main.f710964e.chunk.css.map",
+    "static/js/2.637c1618.chunk.js.LICENSE.txt": "/smsapp/static/js/2.637c1618.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.77970e77.js",
+    "static/css/2.02011f6a.chunk.css",
+    "static/js/2.637c1618.chunk.js",
+    "static/css/main.f710964e.chunk.css",
+    "static/js/main.a769b571.chunk.js"
+  ]
+}
